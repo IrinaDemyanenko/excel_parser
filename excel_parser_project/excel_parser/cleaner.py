@@ -49,7 +49,7 @@ def remove_newlines_n_(x):
     не будет лишней нагрузки.
     """
     if isinstance(x, str):
-        return x.replace('\n', '')
+        return x.replace('\n', ' ')
     return x
 
 

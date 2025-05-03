@@ -20,5 +20,6 @@ def load_data(path: str = RAW_FILE, dtype_map: dict = None) -> pd.DataFrame:
         engine='openpyxl',
         header=2,
         usecols='B:AF',
+        keep_default_na=False,
         )
     return df

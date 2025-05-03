@@ -6,6 +6,39 @@ import pandas as pd
 
 
 
+def split_column_two_float_string(df: pd.DataFrame, col_name: str) -> pd.DataFrame:
+    """Делит колонку col_name на две колонки - float и string.
+
+    Сохраняем в первоначальной колонке только числа типа float.
+    Для строковых значений создаём новую колонку с припиской _na.
+
+    '1,0' останется в col_name
+    'n/a' попадёт в col_name_na
+
+    Возвращает DataFrame обновлённой, с новой колонкой.
+    Использую для колонки Labour.
+    """
+    # если опечатка в названии колонки
+    if col_name not in df.columns:
+        print(f'Колонки {col_name} нет в таблице, проверьте правильность написания.')
+        return df
+
+    col_cleaned = df[col_name].astype(str).str.strip()  # без лишних пробелов
+
+    col_float = pd.to_numeric(
+        col_cleaned.str.replace(',', '.', regex=False),
+        errors='coerce'
+        )  # regex=False как обычный текст, без регулярных выражений
+
+    condition = col_float.isna()
+    col_string = col_cleaned.where(condition)  # оставить значение из col_cleaned, если col_float.isna() равно True
+
+    df[col_name] = col_float
+    df[f'{col_name}_na'] = col_string
+
+    return df
+
+
 def remove_newlines_n_(x):
     """Удаляет символы переноса строки из строки.
 
@@ -14,7 +47,7 @@ def remove_newlines_n_(x):
     не будет лишней нагрузки.
     """
     if isinstance(x, str):
-        return x.replace('\n', '')
+        return x.replace('\n', ' ')
     return x
 
 

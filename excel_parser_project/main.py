@@ -3,8 +3,7 @@ main.py - основной скрипт
 """
 from excel_parser.loader import load_data
 from excel_parser.inspector import inspect
-from excel_parser.config import RAW_FILE, CLEANED_FILE
-from excel_parser.preprocessor import clean_column_and_save_copy
+from excel_parser.config import CLEANED_FILE
 from excel_parser.cleaner import clean_missing_values, remove_new_lines_from_dataframe
 from excel_parser.dtype_schemas import STRING_COLUMNS, INT64_COLUMNS, DATETIME64NS_COLUMNS
 from excel_parser.exporter import export_to_json
@@ -17,12 +16,6 @@ from excel_parser.convertor import (
     split_column_two_float_string
     )
 
-
-def prepare():
-    """Очищает исходный Excel-файл и сохраняет копию с чистыми значениями."""
-
-    cleaned_file = clean_column_and_save_copy(input_path=RAW_FILE, sheet_name='РЕГЛАМЕНТ')
-    print(f'Файл подготовлен {cleaned_file}')
 
 
 def parse():
@@ -51,5 +44,4 @@ def parse():
 
 
 if __name__ == '__main__':
-    #prepare()  # !!! запустить эту функцию один раз вручную, создать копию
     parse()      # потом можно запускать хоть сколько угодно раз

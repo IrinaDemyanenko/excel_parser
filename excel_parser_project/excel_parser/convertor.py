@@ -39,28 +39,6 @@ def split_column_two_float_string(df: pd.DataFrame, col_name: str) -> pd.DataFra
     return df
 
 
-def remove_newlines_n_(x):
-    """Удаляет символы переноса строки из строки.
-
-    Применим до массового преобразования в строки.
-    Т. к. функция сработает только для строк (числа и даты пропустит),
-    не будет лишней нагрузки.
-    """
-    if isinstance(x, str):
-        return x.replace('\n', ' ')
-    return x
-
-
-def remove_new_lines_from_dataframe(df: pd.DataFrame) -> pd.DataFrame:
-    """Удаляет все переносы строк '\n' из DataFrame.
-
-    Применяется после очистки таблицы от прочерков и пустых значений.
-    """
-    df = df.applymap(remove_newlines_n_)
-    return df
-
-
-
 def format_chptr(x):
     """Меняет тип с int на string, при этом форматирует строку так,
     чтобы она состояла из двух символов. Для односимвольных строк добавляет
